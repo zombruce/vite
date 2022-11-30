@@ -83,12 +83,12 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         },
         plugins: [
             // 使用mkcert为vite https开发服务提供证书支持
-            mkcert(),
+            // mkcert(),
             vue(),
             vueJsx(),
             // 浏览器兼容
             legacy({
-                targets: ['defaults', 'not IE 11', 'chrome 79', 'maintained node versions'],
+                targets: ['defaults', 'not IE 11', 'chrome >= 49', 'maintained node versions'],
                 additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
                 // 根据你自己需要导入相应的polyfill:  https://github.com/vitejs/vite/tree/main/packages/plugin-legacy#polyfill-specifiers
                 modernPolyfills: ['es.promise.finally', 'es/array', 'es/map', 'es/set']
@@ -102,9 +102,9 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
                     theme: 'dark' // 主题颜色
                 }
             }),
-            unocssVitePlugin({
-                presets: [presetUno(), presetAttributify(), presetIcons()]
-            }),
+            // unocssVitePlugin({
+            //     presets: [presetUno(), presetAttributify(), presetIcons()]
+            // }),
             // https://github.com/antfu/unplugin-vue-components
             components({
                 resolvers: [antDesignVueResolver()]
@@ -124,10 +124,10 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         css: {
             preprocessorOptions: {
                 less: {
-                    javascriptEnabled: true
-                    // modifyVars: {},
-                    // additionalData:
-                    //     '@import "ant-design-vue/lib/style/themes/default.less";@import "@/styles/variables.less";'
+                    javascriptEnabled: true,
+                    modifyVars: {},
+                    additionalData:
+                        '@import "ant-design-vue/lib/style/themes/default.less";@import "@/styles/variables.less";'
                 }
                 // scss: {
                 //   additionalData: `
