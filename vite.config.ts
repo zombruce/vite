@@ -13,10 +13,51 @@ import { presetUno, presetAttributify, presetIcons } from 'unocss'
 // 实现组件库或内部组件的自动按需引入组件
 import components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver as antDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import glob from 'glob'
+import { resolve } from 'path'
+import history from 'connect-history-api-fallback'
 import pkg from './package.json'
-import { setEntry } from './setEntry'
 
-setEntry()
+const multiPage: any = {}
+const pageEntry: any = {}
+
+function getInput() {
+    const allEntry = glob.sync('./src/pages/**/index.html')
+    allEntry.forEach((entry: string) => {
+        const pathArr = entry.split('/')
+        const name = pathArr[pathArr.length - 2]
+        multiPage[name] = {
+            name,
+            rootPage: `/src/pages/${name}/index.html`
+        }
+        pageEntry[name] = resolve(__dirname, `/src/pages/${name}/index.html`)
+    })
+}
+function pathRewritePlugin() {
+    const rules: any[] = []
+    console.log(multiPage)
+
+    Reflect.ownKeys(multiPage).forEach((key) => {
+        rules.push({
+            from: `/${multiPage[key].name}`,
+            to: `${multiPage[key].rootPage}`
+        })
+    })
+    console.log(rules, '123')
+    return {
+        name: 'path-rewrite-plugin',
+        configureServer(server: any) {
+            server.middlewares.use(
+                history({
+                    htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
+                    disableDotRule: undefined,
+                    rewrites: rules
+                })
+            )
+        }
+    }
+}
+getInput()
 
 const CWD = process.cwd()
 const __APP_INFO__ = {
@@ -77,7 +118,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
                 eslint: {
                     lintCommand: 'eslint "./src/**/*.{.vue,ts,tsx}"' // for example, lint .ts & .tsx
                 }
-            })
+            }),
+            pathRewritePlugin()
         ],
         css: {
             preprocessorOptions: {
@@ -118,7 +160,16 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
         },
         optimizeDeps: {
             include: ['@vue/runtime-core', '@vue/shared', 'lodash-es', 'ant-design-vue/es/locale/zh_CN']
+        },
+        build: {
+            rollupOptions: {
+                input: pageEntry,
+                output: {
+                    entryFileNames: 'assets/js/entry-[name]-[hash].js',
+                    chunkFileNames: 'assets/js/chunk-[name]-[hash].js',
+                    assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+                }
+            }
         }
     }
 })
-
