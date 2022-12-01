@@ -12,6 +12,8 @@
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
     },
     "dependencies": {
+        "axios": "^1.2.0",
+        "crypto-js": "^4.1.1",
         "pinia": "^2.0.26",
         "terser": "^5.16.0",
         "vue": "^3.2.45",

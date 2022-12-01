@@ -7,4 +7,9 @@ declare module '*.vue' {
     export default component
 }
 
+declare module '*.json' {
+    const value: any
+    export default value
+}
+
 declare module 'glob'

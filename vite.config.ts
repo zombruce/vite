@@ -156,12 +156,33 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             strictPort: false, // 设为true时端口被占用则直接退出，不会尝试其他可用的端口
             hmr: true // 禁用或配置HMR连接（热更新是否开启）
         },
+        // 依赖优化选项
         optimizeDeps: {
             include: ['@vue/runtime-core', '@vue/shared', 'lodash-es', 'ant-design-vue/es/locale/zh_CN']
         },
         build: {
             // 设置最终构建的浏览器兼容目标
             target: ['chrome >= 49'],
+            // 传递给 Terser 的更多 minify 选项
+            terserOptions: {
+                compress: {
+                    drop_console: false,
+                    drop_debugger: true
+                }
+            },
+            modulePreload: true,
+            manifest: true, // 当设置为 true，构建后将会生成 manifest.json 文件，包含了没有被 hash 过的资源文件名和 hash 后版本的映射
+            ssrManifest: false, // 当设置为 true 时，构建也将生成 SSR 的 manifest 文件，以确定生产中的样式链接与资产预加载指令
+            outDir: env.VITE_OUTPUT_DIR,
+            assetsDir: 'assets',
+            assetsInlineLimit: 2048, // 单位字节（1024等于1kb） 小于此阈值的导入或引用资源将内联为 base64 编码，以避免额外的 http 请求。设置为 0 可以完全禁用此项
+            cssCodeSplit: false, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
+            sourcemap: false, // 构建后是否生成 source map 文件
+            reportCompressedSize: false, // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
+            chunkSizeWarningLimit: 1000, // chunk 大小警告的限制（以 kbs 为单位）默认：500
+            cssTarget: ['chrome >= 49'], // 防止 vite 将 rgba() 颜色转化为 #RGBA 十六进制符号的形式
+            // (要兼容的场景是安卓微信中的 webview 时, 它不支持 CSS 中的 #RGBA 十六进制颜色符号)
+            emptyOutDir: true, // 默认情况下，若outDir在root目录下，则Vite会在构建时清空该目录
             rollupOptions: {
                 input: pageEntry,
                 output: {
