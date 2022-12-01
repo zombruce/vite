@@ -22,15 +22,15 @@ const multiPage: any = {}
 const pageEntry: any = {}
 
 function getInput() {
-    const allEntry = glob.sync('./src/pages/**/index.html')
+    const allEntry = glob.sync('./src/packages/**/index.html')
     allEntry.forEach((entry: string) => {
         const pathArr = entry.split('/')
         const name = pathArr[pathArr.length - 2]
         multiPage[name] = {
             name,
-            rootPage: `/src/pages/${name}/index.html`
+            rootPage: `/src/packages/${name}/index.html`
         }
-        pageEntry[name] = resolve(__dirname, `/src/pages/${name}/index.html`)
+        pageEntry[name] = resolve(__dirname, `/src/packages/${name}/index.html`)
     })
 }
 function pathRewritePlugin() {
@@ -89,9 +89,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             // 浏览器兼容
             legacy({
                 targets: ['defaults', 'not IE 11', 'chrome >= 49', 'maintained node versions'],
-                additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-                // 根据你自己需要导入相应的polyfill:  https://github.com/vitejs/vite/tree/main/packages/plugin-legacy#polyfill-specifiers
-                modernPolyfills: ['es.promise.finally', 'es/array', 'es/map', 'es/set']
+                additionalLegacyPolyfills: ['regenerator-runtime/runtime']
             }),
             viteVConsole({
                 entry: fileURLToPath(new URL('./src/main.ts', import.meta.url)), // 入口文件，或者可以使用这个配置: [path.resolve('src/main.ts')]
@@ -162,6 +160,8 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             include: ['@vue/runtime-core', '@vue/shared', 'lodash-es', 'ant-design-vue/es/locale/zh_CN']
         },
         build: {
+            // 设置最终构建的浏览器兼容目标
+            target: ['chrome >= 49'],
             rollupOptions: {
                 input: pageEntry,
                 output: {
