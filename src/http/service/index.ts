@@ -70,7 +70,7 @@ const transform: AxiosTransform = {
                     // })
                     // localStorage.removeItem(TABS_ROUTES)
                     sessionStorage.removeItem('HOTEL_CONFIGS')
-                    location.reload()
+                    window.location.reload()
                     storage.clear()
                     Modal.destroyAll()
                 }

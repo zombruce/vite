@@ -16,6 +16,9 @@ import { AntDesignVueResolver as antDesignVueResolver } from 'unplugin-vue-compo
 import glob from 'glob'
 import { resolve } from 'path'
 import history from 'connect-history-api-fallback'
+// 解决 unplugin-vue-components 插件 加载UI库中无法处理的非组件模块
+import usePluginImport from 'vite-plugin-importer'
+
 import pkg from './package.json'
 
 const multiPage: any = {}
@@ -35,7 +38,6 @@ function getInput() {
 }
 function pathRewritePlugin() {
     const rules: any[] = []
-    console.log(multiPage)
 
     Reflect.ownKeys(multiPage).forEach((key) => {
         rules.push({
@@ -43,7 +45,6 @@ function pathRewritePlugin() {
             to: `${multiPage[key].rootPage}`
         })
     })
-    console.log(rules, '123')
     return {
         name: 'path-rewrite-plugin',
         configureServer(server: any) {
@@ -117,7 +118,12 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
                     lintCommand: 'eslint "./src/**/*.{.vue,ts,tsx}"' // for example, lint .ts & .tsx
                 }
             }),
-            pathRewritePlugin()
+            pathRewritePlugin(),
+            usePluginImport({
+                libraryName: 'ant-design-vue',
+                libraryDirectory: 'es',
+                style: (name) => `${name}/style/css`
+            })
         ],
         css: {
             preprocessorOptions: {

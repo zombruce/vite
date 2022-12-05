@@ -2,8 +2,8 @@
  * @Author: Blake He
  * @Date: 2022-11-29 14:10:35
  * @Description: 本地缓存
- * @LastEditTime: 2022-11-29 14:21:34
- * @LastEditors: Blake He
+ * @LastEditTime: 2022-12-05 15:43:42
+ * @LastEditors: xxx
  */
 
 // 默认缓存期限为7天
@@ -38,8 +38,11 @@ export const createStorage = ({
      */
     const Storage = class {
         private storage = storage
+
         private prefixKey?: string = prefixKey
+
         private encryption: Encryption
+
         private hasEncrypt: boolean
 
         /**
