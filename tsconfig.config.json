@@ -1,36 +1,13 @@
 {
-    "exclude": [
-        "node_modules",
-        "dist",
-        "**/*.js",
-        "**/*.md",
-        "src/**/*.md"
-    ],
-    "include": [
-        "env.d.ts",
-        "**/*.d.ts",
-        "vite.config.*",
-        "src/**/*",
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "types/**/*.d.ts",
-        "types/**/*.ts",
-        "package.json",
-        "qiniu/*",
-        "qiniu/config.ts",
-        "qiniu/qiniu.ts",
-        "qiniu/reporter.ts",
-        "qiniu/upload-webpack-plugin.ts.bak",
-        "qiniu/utils.ts",
-        "qiniu/vite-plugin-qiniu-oss.ts"
-    ],
     "compilerOptions": {
         "composite": true,
         "module": "ESNext",
         "moduleResolution": "Node",
-        "allowSyntheticDefaultImports": true,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-    }
+        "allowSyntheticDefaultImports": false,
+        "resolveJsonModule": false,
+        "esModuleInterop": false
+    },
+    "include": [
+        // "vite.config.*",
+    ]
 }

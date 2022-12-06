@@ -30,21 +30,21 @@ const router = createRouter({
     routes: routes as unknown as RouteRecordRaw[]
 })
 
-router.beforeEach((to, from, next) => {
-    // if (to.query.hotelId) {
-    //     if (!storage.get(HotelStorageEnum.CURRENT_HOTELID)) {
-    //         storage.set(HotelStorageEnum.CURRENT_HOTELID, to.query.hotelId)
-    //     }
-    //     next()
-    // } else {
-    //     next({
-    //         path: to.path,
-    //         query: {
-    //             ...to.query,
-    //             hotelId: storage.get(HotelStorageEnum.CURRENT_HOTELID)
-    //         }
-    //     })
-    // }
+router.beforeEach((to, _, next) => {
+    if (to.query.hotelId) {
+        if (!storage.get(HotelStorageEnum.CURRENT_HOTELID)) {
+            storage.set(HotelStorageEnum.CURRENT_HOTELID, to.query.hotelId)
+        }
+        next()
+    } else {
+        next({
+            path: to.path,
+            query: {
+                ...to.query,
+                hotelId: storage.get(HotelStorageEnum.CURRENT_HOTELID)
+            }
+        })
+    }
     next()
 })
 

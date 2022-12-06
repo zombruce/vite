@@ -18,12 +18,10 @@ module.exports = {
     },
     plugins: ['vue'],
     extends: [
-        'plugin:@typescript-eslint/recommended',
-        'plugin:vue/vue3-recommended',
-        'airbnb-base',
-        // 'prettier',
-        'plugin:prettier/recommended'
-        // '@vue/typescript/recommended'
+        'plugin:vue/vue3-essential',
+        'eslint:recommended',
+        '@vue/eslint-config-typescript',
+        '@vue/eslint-config-prettier'
     ],
     overrides: [
         {
@@ -33,9 +31,9 @@ module.exports = {
             }
         },
         {
-            files: ['src/**/**/*.vue'],
+            files: ['vite.config.ts'],
             rules: {
-                'vue/multi-word-component-names': 0
+                'camelcase': 'off'
             }
         }
     ],
@@ -124,6 +122,8 @@ module.exports = {
         'no-constant-condition': 'error', // 禁止在条件中使用常量表达式 if(true) if('warn')
         '@typescript-eslint/no-unused-vars': ['off'],
         '@typescript-eslint/no-non-null-assertion': 'off',
-        'vue/no-v-html': 'off' // 防止XSS注入的话，建议使用npm install vue-dompurify-html --save
+        'vue/no-v-html': 'off', // 防止XSS注入的话，建议使用npm install vue-dompurify-html --save
+        'vue/multi-word-component-names': 'off',
+        'vue/no-useless-template-attributes': 'off'
     }
 }

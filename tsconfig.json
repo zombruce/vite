@@ -1,12 +1,13 @@
 {
-    "exclude": ["node_modules", "./entryInput.ts"],
-    "include": ["env.d.ts", "src/**/*.vue"],
     "compilerOptions": {
         "target": "ESNext",
         "useDefineForClassFields": true,
         "module": "ESNext",
         "moduleResolution": "Node",
         "strict": true,
+        // "noLib": false,
+        // "forceConsistentCasingInFileNames": false, // 暂时关闭
+        // "strictFunctionTypes": false,
         "jsx": "preserve",
         "sourceMap": true,
         "resolveJsonModule": true,
@@ -15,17 +16,48 @@
         "lib": ["ESNext", "DOM"],
         "skipLibCheck": true,
         "allowJs": true, // 允许编译器编译JS，JSX文件
+        "noUnusedLocals": false, // 暂时关闭
+        "noUnusedParameters": false, // 暂时关闭
+        "experimentalDecorators": false, // 暂时关闭
         "checkJs": true,
-        "noEmit": true, // 编译后不输出任何js文件
+        "noEmit": false, // 编译后不输出任何js文件
         "noImplicitAny": false,
         "importHelpers": true, // 不让同样的辅助函数重复的出现在多个文件中
         "allowSyntheticDefaultImports": true, // 允许对不包含默认导出的模块使用默认导入。
         // ++ 这里加上baseUrl 和 path即可 ++
         "baseUrl": ".", // 非相对模块的导入可以相对于baseUrl或通过下文会讲到的路径映射来进行解析
         "paths": {
-            "@/*": ["./src/*"]
+            // 配置导出路径（这里根据自己项目执行修改）
+            "@/*": ["src/*"],
+            "@/stores*": ["src/stores*"],
+            "@/router*": ["src/router*"],
+            "@/components*": ["./src/components*"],
+            "@/utils*": ["./src/utils*"],
+            "@/assets*": ["./src/assets*"],
+            "@/enums*": ["./src/enums*"]
         }
     },
+    "exclude": ["node_modules", "dist", "**/*.js", "**/*.md", "src/**/*.md"],
+    "include": [
+        "env.d.ts",
+        "vite.config.*",
+        "package.json",
+        "src/*",
+        "src/**/*",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "types/**/*.d.ts",
+        "types/**/*.ts",
+        "qiniu/*",
+        "qiniu/config.ts",
+        "qiniu/qiniu.ts",
+        "qiniu/reporter.ts",
+        "qiniu/upload-webpack-plugin.ts.bak",
+        "qiniu/utils.ts",
+        "qiniu/vite-plugin-qiniu-oss.ts",
+        "qiniu/vite-function-qiniu-oss.ts"
+    ],
     "references": [
         {
             "path": "./tsconfig.config.json"

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span>Guide</span>
+        <span>Guide </span>
         {{ counter.count }}
         <a-button type="primary" @click="doclick">点击</a-button>
         <a-button type="link" @click="showMessage">message</a-button>

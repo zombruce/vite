@@ -1,21 +1,18 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
-import type { UserConfig, ConfigEnv } from 'vite'
+// import type { UserConfig, ConfigEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import dayjs from 'dayjs'
-import mkcert from 'vite-plugin-mkcert'
+// import mkcert from 'vite-plugin-mkcert'
 import legacy from '@vitejs/plugin-legacy'
 import checker from 'vite-plugin-checker'
 import { viteVConsole } from 'vite-plugin-vconsole'
-import unocssVitePlugin from 'unocss/vite'
-import { presetUno, presetAttributify, presetIcons } from 'unocss'
+// import unocssVitePlugin from 'unocss/vite'
+// import { presetUno, presetAttributify, presetIcons } from 'unocss'
 // 实现组件库或内部组件的自动按需引入组件
 import components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver as antDesignVueResolver } from 'unplugin-vue-components/resolvers'
-import glob from 'glob'
-import { resolve } from 'path'
-import history from 'connect-history-api-fallback'
 // 解决 unplugin-vue-components 插件 加载UI库中无法处理的非组件模块
 import usePluginImport from 'vite-plugin-importer'
 
@@ -32,7 +29,7 @@ const __APP_INFO__ = {
 multiPageConfig.getInput()
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode, ssrBuild }) => {
+export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, CWD)
     console.log(env, 'env')
     return {
@@ -137,6 +134,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             include: ['@vue/runtime-core', '@vue/shared', 'lodash-es', 'ant-design-vue/es/locale/zh_CN']
         },
         build: {
+            minify: 'terser',
             // 设置最终构建的浏览器兼容目标
             target: ['chrome >= 49'],
             // 传递给 Terser 的更多 minify 选项
