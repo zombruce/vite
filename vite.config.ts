@@ -21,57 +21,27 @@ import usePluginImport from 'vite-plugin-importer'
 
 import pkg from './package.json'
 
-const multiPage: any = {}
-const pageEntry: any = {}
-
-function getInput() {
-    const allEntry = glob.sync('./src/packages/**/index.html')
-    allEntry.forEach((entry: string) => {
-        const pathArr = entry.split('/')
-        const name = pathArr[pathArr.length - 2]
-        multiPage[name] = {
-            name,
-            rootPage: `/src/packages/${name}/index.html`
-        }
-        pageEntry[name] = resolve(__dirname, `/src/packages/${name}/index.html`)
-    })
-}
-function pathRewritePlugin() {
-    const rules: any[] = []
-
-    Reflect.ownKeys(multiPage).forEach((key) => {
-        rules.push({
-            from: `/${multiPage[key].name}`,
-            to: `${multiPage[key].rootPage}`
-        })
-    })
-    return {
-        name: 'path-rewrite-plugin',
-        configureServer(server: any) {
-            server.middlewares.use(
-                history({
-                    htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
-                    disableDotRule: undefined,
-                    rewrites: rules
-                })
-            )
-        }
-    }
-}
-getInput()
+import multiPageConfig from './vite.config.multipage'
 
 const CWD = process.cwd()
 const __APP_INFO__ = {
     pkg,
     lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
 }
+
+multiPageConfig.getInput()
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode, ssrBuild }) => {
     const env = loadEnv(mode, CWD)
     console.log(env, 'env')
     return {
-        root: CWD,
-        base: env.VITE_BASE_URL,
+        root: 'src/packages',
+        base: '/',
+        // 静态资源服务文件夹
+        publicDir: 'public',
+        // 默认'public'  作为静态资源服务的文件夹  (打包public文件夹会没有，里面得东西会直接编译在dist文件下)
+        assetsInclude: fileURLToPath(new URL('./src/assets', import.meta.url)), // 静态资源处理
         define: {
             __APP_INFO__: JSON.stringify(__APP_INFO__)
         },
@@ -112,13 +82,13 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             // https://github.com/fi3ework/vite-plugin-checker
             // 一个Vite插件，可以在工作线程中运行TypeScript, VLS, vue-tsc, ESLint。
             checker({
-                typescript: true,
+                typescript: true
                 // vueTsc: true,
-                eslint: {
-                    lintCommand: 'eslint "./src/**/*.{.vue,ts,tsx}"' // for example, lint .ts & .tsx
-                }
+                // eslint: {
+                //     lintCommand: 'eslint "./src/**/*.{.vue,ts,tsx}"' // for example, lint .ts & .tsx
+                // }
             }),
-            pathRewritePlugin(),
+            multiPageConfig.pathRewritePlugin(),
             usePluginImport({
                 libraryName: 'ant-design-vue',
                 libraryDirectory: 'es',
@@ -190,7 +160,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
             // (要兼容的场景是安卓微信中的 webview 时, 它不支持 CSS 中的 #RGBA 十六进制颜色符号)
             emptyOutDir: true, // 默认情况下，若outDir在root目录下，则Vite会在构建时清空该目录
             rollupOptions: {
-                input: pageEntry,
+                input: multiPageConfig.pageEntry,
                 output: {
                     entryFileNames: 'assets/js/entry-[name]-[hash].js',
                     chunkFileNames: 'assets/js/chunk-[name]-[hash].js',

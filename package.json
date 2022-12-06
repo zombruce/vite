@@ -4,10 +4,17 @@
     "private": true,
     "scripts": {
         "dev": "vite",
+        "Guide": "vite serve src/packages/Guide/ --config ./vite.config.ts --mode localhost",
+        "AI": "vite serve src/packages/AI/ --config ./vite.config.ts",
         "build": "run-p type-check build-only",
-        "build:dev": "run-p type-check build-only",
+        "build:dev": "vue-tsc --noEmit && vite build --mode development",
+        "build:sit": "run-p type-check && vue-tsc --noEmit && vite build --mode sit",
+        "build:prod": "run-p type-check && vue-tsc --noEmit && vite build --mode prod",
         "preview": "vite preview",
         "build-only": "vite build",
+        "build-only-dev": "vite build --mode development && cp -r ./dev_dist/src/packages/ ./dev_dist/ && rm -rf dev_dist/src",
+        "build-only-sit": "vite build --mode sit && cp -r ./sit_dist/src/packages/ ./sit_dist/ && rm -rf sit_dist/src",
+        "build-only-prod": "vite build --mode prod && cp -r ./prod_dist/src/packages/ ./prod_dist/ && rm -rf prod_dist/src",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
     },

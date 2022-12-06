@@ -1,6 +1,6 @@
 {
     "exclude": ["node_modules", "./entryInput.ts"],
-    "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+    "include": ["env.d.ts", "src/**/*.vue"],
     "compilerOptions": {
         "target": "ESNext",
         "useDefineForClassFields": true,

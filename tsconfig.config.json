@@ -1,9 +1,36 @@
 {
-    "extends": "@vue/tsconfig/tsconfig.node.json",
-    "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.js",
+        "**/*.md",
+        "src/**/*.md"
+    ],
+    "include": [
+        "env.d.ts",
+        "**/*.d.ts",
+        "vite.config.*",
+        "src/**/*",
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "types/**/*.d.ts",
+        "types/**/*.ts",
+        "package.json",
+        "qiniu/*",
+        "qiniu/config.ts",
+        "qiniu/qiniu.ts",
+        "qiniu/reporter.ts",
+        "qiniu/upload-webpack-plugin.ts.bak",
+        "qiniu/utils.ts",
+        "qiniu/vite-plugin-qiniu-oss.ts"
+    ],
     "compilerOptions": {
         "composite": true,
-        "types": ["node"]
-    },
-    "files": ["./setEntry.ts", "package.json"]
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+    }
 }
