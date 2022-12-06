@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import legacy from '@vitejs/plugin-legacy'
 import checker from 'vite-plugin-checker'
 import { viteVConsole } from 'vite-plugin-vconsole'
+import path from 'path'
 // import unocssVitePlugin from 'unocss/vite'
 // import { presetUno, presetAttributify, presetIcons } from 'unocss'
 // 实现组件库或内部组件的自动按需引入组件
@@ -36,7 +37,7 @@ export default defineConfig(({ mode }) => {
         root: 'src/packages',
         base: '/',
         // 静态资源服务文件夹
-        publicDir: 'public',
+        publicDir: path.resolve(__dirname, './public'),
         // 默认'public'  作为静态资源服务的文件夹  (打包public文件夹会没有，里面得东西会直接编译在dist文件下)
         assetsInclude: fileURLToPath(new URL('./src/assets', import.meta.url)), // 静态资源处理
         define: {

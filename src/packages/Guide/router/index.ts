@@ -4,19 +4,6 @@ import { createStorage } from '@/utils/cache/index'
 import { HotelStorageEnum } from '@/enums/storageKeyEnum'
 
 const storage = createStorage()
-
-let routes: AppRouteModule[] = [
-    {
-        path: '/',
-        name: 'home',
-        component: () => import('../views/Index.vue')
-    },
-    {
-        path: '/about',
-        name: 'about',
-        component: () => import('../views/about/Index.vue')
-    }
-]
 // 模块化路由
 const routesModules: Record<string, any> = import.meta.globEager('./modules/*.ts')
 const modules: AppRouteModule[] = []
@@ -24,7 +11,16 @@ Object.keys(routesModules).forEach((key) => {
     modules.push(...routesModules[key].default)
 })
 
-routes = routes.concat(modules)
+let routes: AppRouteModule[] = [
+    {
+        path: '/',
+        name: 'Layout',
+        component: () => import('@/packages/Guide/layout/Index.vue'),
+        redirect: '/about',
+        children: [...modules]
+    }
+]
+
 const router = createRouter({
     history: createWebHistory('/guide'),
     routes: routes as unknown as RouteRecordRaw[]

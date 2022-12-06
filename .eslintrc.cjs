@@ -124,6 +124,5 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         'vue/no-v-html': 'off', // 防止XSS注入的话，建议使用npm install vue-dompurify-html --save
         'vue/multi-word-component-names': 'off',
-        'vue/no-useless-template-attributes': 'off'
     }
 }

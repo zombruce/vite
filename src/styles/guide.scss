@@ -1,0 +1,11 @@
+body {
+  width: 900px !important;
+  height: 600px !important;
+  overflow: hidden !important;
+  display: flex  !important;
+  margin: 0  !important;
+  padding: 0  !important;
+  & > #app {
+    flex: 1;
+  }
+}
