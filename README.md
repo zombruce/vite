@@ -110,11 +110,11 @@ npm run lint
    2、plugins 添加插件
    // 浏览器兼容
    legacy({
-       targets: ['defaults', 'not IE 11', 'chrome >= 49', 'maintained node versions'],
+       targets: ['defaults', 'not IE 11', 'chrome 49', 'maintained node versions'],
        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
    })
    3、build 构建中设置最终构建的浏览器兼容目标
-   target: ['chrome >= 49'],
+   target: ['chrome 49'],
    `````
 3. 
 

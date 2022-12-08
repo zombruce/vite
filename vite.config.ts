@@ -57,7 +57,7 @@ export default defineConfig(({ mode }) => {
             vueJsx(),
             // 浏览器兼容
             legacy({
-                targets: ['defaults', 'not IE 11', 'chrome >= 49', 'maintained node versions'],
+                targets: ['defaults', 'not IE 11', 'chrome 49', 'maintained node versions'],
                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
             }),
             viteVConsole({
@@ -74,7 +74,7 @@ export default defineConfig(({ mode }) => {
             // }),
             // https://github.com/antfu/unplugin-vue-components
             components({
-                resolvers: [antDesignVueResolver()]
+                resolvers: [antDesignVueResolver({ importStyle: false })]
                 // directoryAsNamespace: true,
             }),
             // https://github.com/fi3ework/vite-plugin-checker
@@ -96,10 +96,9 @@ export default defineConfig(({ mode }) => {
         css: {
             preprocessorOptions: {
                 less: {
-                    javascriptEnabled: true,
-                    modifyVars: {},
-                    additionalData:
-                        '@import "ant-design-vue/lib/style/themes/default.less";@import "@/styles/variables.less";'
+                    javascriptEnabled: true
+                    // modifyVars: {},
+                    // additionalData: '@import "ant-design-vue/lib/style/themes/default.less";'
                 }
                 // scss: {
                 //   additionalData: `
@@ -137,7 +136,7 @@ export default defineConfig(({ mode }) => {
         build: {
             minify: 'terser',
             // 设置最终构建的浏览器兼容目标
-            target: ['chrome >= 49'],
+            target: ['chrome49'],
             // 传递给 Terser 的更多 minify 选项
             terserOptions: {
                 compress: {
@@ -155,7 +154,7 @@ export default defineConfig(({ mode }) => {
             sourcemap: false, // 构建后是否生成 source map 文件
             reportCompressedSize: false, // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
             chunkSizeWarningLimit: 1000, // chunk 大小警告的限制（以 kbs 为单位）默认：500
-            cssTarget: ['chrome >= 49'], // 防止 vite 将 rgba() 颜色转化为 #RGBA 十六进制符号的形式
+            cssTarget: ['chrome49'], // 防止 vite 将 rgba() 颜色转化为 #RGBA 十六进制符号的形式
             // (要兼容的场景是安卓微信中的 webview 时, 它不支持 CSS 中的 #RGBA 十六进制颜色符号)
             emptyOutDir: true, // 默认情况下，若outDir在root目录下，则Vite会在构建时清空该目录
             rollupOptions: {
