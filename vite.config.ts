@@ -40,6 +40,8 @@ export default defineConfig(({ mode }) => {
         publicDir: path.resolve(__dirname, './public'),
         // 默认'public'  作为静态资源服务的文件夹  (打包public文件夹会没有，里面得东西会直接编译在dist文件下)
         assetsInclude: fileURLToPath(new URL('./src/assets', import.meta.url)), // 静态资源处理
+        envDir: fileURLToPath(new URL('./', import.meta.url)),
+        envPrefix: 'VITE_',
         define: {
             __APP_INFO__: JSON.stringify(__APP_INFO__)
         },

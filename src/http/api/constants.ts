@@ -1,0 +1,7 @@
+export const ADMIN_CENTER = '/admincenter'
+export const OPERATION_CENTER = '/operationcenter'
+export const FINANCE_CENTER = '/financecenter'
+export const CONFIG_CENTER = '/configcenter'
+export const PSB_GATEWAY = '/psbgateway'
+export const NIGHTAUDIT_CENTER = '/nightauditcenter'
+export const CORE_CENTER = '/corecenter'

@@ -34,7 +34,10 @@
             "@/components*": ["./src/components*"],
             "@/utils*": ["./src/utils*"],
             "@/assets*": ["./src/assets*"],
-            "@/enums*": ["./src/enums*"]
+            "@/enums*": ["./src/enums*"],
+            "@/hooks*": [
+                "./src/hooks*"
+            ]
         }
     },
     "exclude": ["node_modules", "dist", "**/*.js", "**/*.md", "src/**/*.md"],

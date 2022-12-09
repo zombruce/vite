@@ -158,7 +158,7 @@ const transform: AxiosTransform = {
         } else {
             // 多环境通过代理方便调试
             config.url =
-                import.meta.env.VITE_NODE_ENV === 'localhost' ? `/api${config.url}` : `${apiUrl || ''}${config.url}`
+                import.meta.env.VITE_NODE_ENV === 'development' ? `/api${config.url}` : `${apiUrl || ''}${config.url}`
         }
 
         if (config.method?.toUpperCase() === RequestEnum.GET) {
@@ -287,7 +287,7 @@ const Axios = new VAxios({
         // 是否显示失败信息
         isShowErrorMessage: true,
         // 接口地址
-        apiUrl: process.env.VITE_APP_API_HOST,
+        apiUrl: import.meta.env.VITE_APP_API_HOST,
         isUrl: false,
         //
         isParseToJson: true
