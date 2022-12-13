@@ -15,8 +15,6 @@ module.exports = {
     bracketSpacing: true,
     // 代码的解析引擎，默认为babylon，与babel相同
     // parser: 'babylon',
-    // 未尾分号
-    trailingComma: 'none',
     jsxBracketSameLine: false,
     jsxSingleQuote: false,
     arrowParens: 'always',
