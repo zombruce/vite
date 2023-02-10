@@ -10,7 +10,7 @@
 <script lang="ts" setup>
     import { storeToRefs } from 'pinia'
     import { message } from 'ant-design-vue'
-    import { useCounterStore } from '@/stores/index'
+    import { useCounterStore } from '@/store/index'
     import { useModal } from '@/hooks/useModal'
     import AddRoomTypeModal from '@/packages/Guide/Modal/addRoomType/Index.vue'
 

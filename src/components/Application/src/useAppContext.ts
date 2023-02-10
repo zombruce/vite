@@ -1,5 +1,5 @@
-import { InjectionKey, Ref } from 'vue'
 import { createContext, useContext } from '@/hooks/Design/core/useContext'
+import { InjectionKey, Ref } from 'vue'
 
 export interface AppProviderContextProps {
     prefixCls: Ref<string>

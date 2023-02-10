@@ -192,3 +192,11 @@ export function isJSON(str) {
     console.log('It is not a string!')
     return false
 }
+
+export function isNull(val: unknown): val is null {
+    return val === null
+}
+
+export function isNullOrUnDef(val: unknown): val is null | undefined {
+    return isUnDef(val) || isNull(val)
+}

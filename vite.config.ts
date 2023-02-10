@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
+import { resolve } from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
+import { generateModifyVars } from './build/generate/generateModifyVars'
 // import type { UserConfig, ConfigEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -8,6 +10,7 @@ import dayjs from 'dayjs'
 import legacy from '@vitejs/plugin-legacy'
 import checker from 'vite-plugin-checker'
 import { viteVConsole } from 'vite-plugin-vconsole'
+import windiCSS from 'vite-plugin-windicss'
 import path from 'path'
 // import unocssVitePlugin from 'unocss/vite'
 // import { presetUno, presetAttributify, presetIcons } from 'unocss'
@@ -46,9 +49,12 @@ export default defineConfig(({ mode }) => {
             __APP_INFO__: JSON.stringify(__APP_INFO__)
         },
         resolve: {
-            alias: {
-                '@': fileURLToPath(new URL('./src', import.meta.url))
-            },
+            alias: [
+                {
+                    find: '@',
+                    replacement: resolve(__dirname, './src')
+                }
+            ]
             // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
             // extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
@@ -88,6 +94,8 @@ export default defineConfig(({ mode }) => {
                 //     lintCommand: 'eslint "./src/**/*.{.vue,ts,tsx}"' // for example, lint .ts & .tsx
                 // }
             }),
+            // vite-plugin-windicss
+            windiCSS(),
             multiPageConfig.pathRewritePlugin(),
             usePluginImport({
                 libraryName: 'ant-design-vue',
@@ -98,8 +106,9 @@ export default defineConfig(({ mode }) => {
         css: {
             preprocessorOptions: {
                 less: {
+                    modifyVars: generateModifyVars(),
                     javascriptEnabled: true
-                    // modifyVars: {},
+
                     // additionalData: '@import "ant-design-vue/lib/style/themes/default.less";'
                 }
                 // scss: {

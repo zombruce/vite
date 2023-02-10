@@ -1,8 +1,10 @@
 <template>
-    <a-config-provider :locale="zhCN" :getPopupContainer="getPopupContainer">
-        <RouterView #="{ Component }">
-            <component :is="Component" />
-        </RouterView>
+    <a-config-provider :locale="zhCN">
+        <AppProvider>
+            <RouterView #="{ Component }">
+                <component :is="Component" />
+            </RouterView>
+        </AppProvider>
     </a-config-provider>
 </template>
 
@@ -10,6 +12,7 @@
     import { ConfigProvider } from 'ant-design-vue'
     import zhCN from 'ant-design-vue/es/locale/zh_CN'
     import { reactive } from 'vue'
+    import { AppProvider } from '@/components/Application'
 
     const getPopupContainer = (el, dialogContext) => {
         if (dialogContext) {
@@ -19,7 +22,7 @@
     }
 
     const colorState = reactive({
-        primaryColor: 'red',
+        primaryColor: '#0960bd',
         errorColor: '#ff4d4f',
         warningColor: '#faad14',
         successColor: '#52c41a',

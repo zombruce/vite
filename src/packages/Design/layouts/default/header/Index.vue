@@ -1,32 +1,67 @@
 <template>
-    <Header>
-        <div class="logo" />
-        <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
-            <a-menu-item key="1">nav 1</a-menu-item>
-            <a-menu-item key="2">nav 2</a-menu-item>
-            <a-menu-item key="3">nav 3</a-menu-item>
-        </a-menu>
-    </Header>
+    <Layout.Header :class="getHeaderClass">
+        <!-- menu start -->
+        <div :class="`${prefixCls}-menu`" v-if="getShowTopMenu">
+            <LayoutMenu
+                :isHorizontal="true"
+                :theme="getHeaderTheme"
+                :splitType="getSplitType"
+                :menuMode="getMenuMode"
+            />
+        </div>
+        <!-- menu-end -->
+    </Layout.Header>
 </template>
 
 <script lang="ts" setup>
-    import { defineComponent, computed, unref, ref } from 'vue'
+    import { computed, unref, ref } from 'vue'
     import { Layout } from 'ant-design-vue'
     import { useDesign } from '@/hooks/Design/web/useDesign'
+    import { useHeaderSetting } from '@/hooks/Design/setting/useHeaderSetting'
+    import { useMenuSetting } from '@/hooks/Design/setting/useMenuSetting'
+    import { MenuModeEnum, MenuSplitTyeEnum } from '@/enums/menuEnum'
+    import LayoutMenu from '../menu/Index.vue'
+
+    const {
+        getHeaderTheme,
+        getShowFullScreen,
+        getShowNotice,
+        getShowContent,
+        getShowBread,
+        getShowHeaderLogo,
+        getShowHeader,
+        getShowSearch
+    } = useHeaderSetting()
+    const { getShowTopMenu, getShowHeaderTrigger, getSplit, getIsMixMode, getMenuWidth, getIsMixSidebar } =
+        useMenuSetting()
 
     const { prefixCls } = useDesign('layout-header')
 
+    const props = defineProps({
+        fixed: {
+            type: Boolean
+        }
+    })
     const selectedKeys = ref<string[]>(['2'])
-    defineComponent({
-        Header: Layout.Header
+
+    const getHeaderClass = computed(() => {
+        const theme = unref(getHeaderTheme)
+        return [
+            prefixCls,
+            {
+                [`${prefixCls}--fixed`]: props.fixed,
+                // [`${prefixCls}--mobile`]: unref(getIsMobile),
+                [`${prefixCls}--${theme}`]: theme
+            }
+        ]
     })
 
-    // const getHeaderClass = computed(() => {
-    //     const theme = unref(getHeaderTheme)
-    //     return [
-    //         prefixCls
-    //     ]
-    // })
+    const getSplitType = computed(() => {
+        return unref(getSplit) ? MenuSplitTyeEnum.TOP : MenuSplitTyeEnum.NONE
+    })
+    const getMenuMode = computed(() => {
+        return unref(getSplit) ? MenuModeEnum.HORIZONTAL : null
+    })
 </script>
 
 <style scoped lang="scss"></style>
