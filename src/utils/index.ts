@@ -3,6 +3,8 @@ import type { App, Plugin } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import { isObject } from './is'
 
+export const noop = () => {}
+
 // 深度合并
 export function deepMerge<T = any>(src: any = {}, target: any = {}): T {
     let key: string

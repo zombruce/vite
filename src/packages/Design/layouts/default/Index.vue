@@ -43,31 +43,30 @@
     const collapsed = ref<boolean>(false)
     const layoutClass = computed(() => {
         const cls: string[] = ['ant-layout']
-        // if (unref(getIsMixSidebar) || unref(getShowMenu)) {
-        //     cls.push('ant-layout-has-sider')
-        // }
+        if (unref(getIsMixSidebar) || unref(getShowMenu)) {
+            cls.push('ant-layout-has-sider')
+        }
         return cls
     })
 </script>
 
-<style lang="scss">
+<style lang="less">
     @prefix-cls: ~'@{namespace}-default-layout';
-    // @prefix-cls: ~'@{namespace}-default-layout';
 
-    // .@{prefix-cls} {
-    //     display: flex;
-    //     width: 100%;
-    //     min-height: 100%;
-    //     background-color: @content-bg;
-    //     flex-direction: column;
+    .@{prefix-cls} {
+        display: flex;
+        width: 100%;
+        min-height: 100%;
+        background-color: @content-bg;
+        flex-direction: column;
 
-    //     > .ant-layout {
-    //         min-height: 100%;
-    //     }
+        > .ant-layout {
+            min-height: 100%;
+        }
 
-    //     &-main {
-    //         width: 100%;
-    //         margin-left: 1px;
-    //     }
-    // }
+        &-main {
+            width: 100%;
+            margin-left: 1px;
+        }
+    }
 </style>

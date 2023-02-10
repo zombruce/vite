@@ -8,7 +8,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import { router, setupRouter } from '@/packages/Design/router'
 
-import '@/styles/Design/index.scss'
+import '@/styles/Design/index.less'
 // import { setupStore } from '@/stores'
 // import 'ant-design-vue/dist/antd.variable.min.css'
 
