@@ -21,7 +21,33 @@
     import { useMenuSetting } from '@/hooks/Design/setting/useMenuSetting'
     import { MenuModeEnum, MenuSplitTyeEnum } from '@/enums/menuEnum'
     import LayoutMenu from '../menu/Index.vue'
+    import { useAppInject } from '@/hooks/Design/web/useAppInject'
 
+    const props = defineProps({
+        fixed: {
+            type: Boolean
+        }
+    })
+
+    const selectedKeys = ref<string[]>(['2'])
+    const getHeaderClass = computed(() => {
+        const theme = unref(getHeaderTheme)
+        return [
+            prefixCls,
+            {
+                [`${prefixCls}--fixed`]: props.fixed,
+                [`${prefixCls}--mobile`]: unref(getIsMobile),
+                [`${prefixCls}--${theme}`]: theme
+            }
+        ]
+    })
+
+    const getSplitType = computed(() => {
+        return unref(getSplit) ? MenuSplitTyeEnum.TOP : MenuSplitTyeEnum.NONE
+    })
+    const getMenuMode = computed(() => {
+        return unref(getSplit) ? MenuModeEnum.HORIZONTAL : null
+    })
     const {
         getHeaderTheme,
         getShowFullScreen,
@@ -35,33 +61,9 @@
     const { getShowTopMenu, getShowHeaderTrigger, getSplit, getIsMixMode, getMenuWidth, getIsMixSidebar } =
         useMenuSetting()
 
+    const { getIsMobile } = useAppInject()
+
     const { prefixCls } = useDesign('layout-header')
-
-    const props = defineProps({
-        fixed: {
-            type: Boolean
-        }
-    })
-    const selectedKeys = ref<string[]>(['2'])
-
-    const getHeaderClass = computed(() => {
-        const theme = unref(getHeaderTheme)
-        return [
-            prefixCls,
-            {
-                [`${prefixCls}--fixed`]: props.fixed,
-                // [`${prefixCls}--mobile`]: unref(getIsMobile),
-                [`${prefixCls}--${theme}`]: theme
-            }
-        ]
-    })
-
-    const getSplitType = computed(() => {
-        return unref(getSplit) ? MenuSplitTyeEnum.TOP : MenuSplitTyeEnum.NONE
-    })
-    const getMenuMode = computed(() => {
-        return unref(getSplit) ? MenuModeEnum.HORIZONTAL : null
-    })
 </script>
 
 <style scoped lang="scss"></style>

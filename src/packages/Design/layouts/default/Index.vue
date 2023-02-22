@@ -1,11 +1,11 @@
 <template>
     <Layout :class="prefixCls">
         <!-- <LayoutFeatures />  -->
-        <LayoutHeader fixed v-if="getShowFullHeaderRef" />
+        <LayoutHeader fixed/>
         <Layout :class="[layoutClass]">
-            <LayoutSideBar v-if="getShowSidebar || getIsMobile" />
+            <LayoutSideBar  />
             <Layout :class="`${prefixCls}-main`">
-                <LayoutMultipleHeader />
+<!--                <LayoutMultipleHeader />-->
                 <LayoutContent />
                 <LayoutFooter />
             </Layout>

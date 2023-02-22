@@ -1,5 +1,5 @@
 <template>
-    <Layout.Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
+    <Layout.Footer :class="prefixCls"  ref="footerRef">
         <div :class="`${prefixCls}__links`">
             <a @click="openWindow(SITE_URL)">在线预览</a>
 
